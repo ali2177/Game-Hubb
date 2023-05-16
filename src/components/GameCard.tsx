@@ -1,4 +1,13 @@
-import { Card, CardBody, HStack, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Card,
+  CardBody,
+  Divider,
+  HStack,
+  Heading,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { Game } from "../hooks/useGames";
 import { Icon } from "@chakra-ui/react";
 import { MdPhoneIphone } from "react-icons/md";
@@ -12,6 +21,8 @@ import {
   FaLinux,
 } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
+import CriticScore from "./CriticScore";
+import getCroppedImageUrl from "../services/image-url";
 
 interface Props {
   game: Game;
@@ -30,17 +41,25 @@ const GameCard = ({ game }: Props) => {
   };
   return (
     <Card borderRadius="10px" overflow="hidden">
-      <Image src={game.background_image} />
+      <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>
-        <HStack marginTop="10px" alignItems="center">
-          {game.parent_platforms.map((platform) => (
-            <Icon
-              color="gray.500"
-              fontSize="1.1rem"
-              as={icons[platform.platform.slug]}
-            />
-          ))}
+        <HStack
+          marginTop="10px"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <HStack>
+            {game.parent_platforms.map((platform) => (
+              <Icon
+                color="gray.500"
+                fontSize="1.1rem"
+                key={platform.platform.id}
+                as={icons[platform.platform.slug]}
+              />
+            ))}
+          </HStack>
+          <CriticScore score={game.metacritic} />
         </HStack>
       </CardBody>
     </Card>
