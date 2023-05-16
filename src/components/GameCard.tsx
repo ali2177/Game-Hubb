@@ -40,7 +40,7 @@ const GameCard = ({ game }: Props) => {
     nintendo: SiNintendo,
   };
   return (
-    <Card borderRadius="10px" overflow="hidden">
+    <Card width="250px" borderRadius="10px" overflow="hidden">
       <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>

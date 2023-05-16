@@ -23,22 +23,28 @@ interface FecthGamesResponse {
 const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
+  const [isloading, setIsloading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
+    setIsloading(true);
     apiClient
       .get<FecthGamesResponse>("/games", { signal: controller.signal })
-      .then((res) => setGames(res.data.results))
+      .then((res) => {
+        setGames(res.data.results);
+        setIsloading(false);
+      })
       .catch((err) => {
         if (err.name === "CanceledError") return;
         setError(err.message);
+        setIsloading(false);
       });
 
     return () => controller.abort();
   }, []);
 
-  return { games, error };
+  return { games, error, isloading };
 };
 
 export default useGames;
