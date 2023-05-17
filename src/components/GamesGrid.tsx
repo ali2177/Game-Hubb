@@ -32,7 +32,8 @@ const GamesGrid = ({ gameQuery }: Probs) => {
         padding="10px"
         spacing={3}
       >
-        {isloading && skeletons.map((skeleton) => <SeletonLoading />)}
+        {isloading &&
+          skeletons.map((skeleton, index) => <SeletonLoading key={index} />)}
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}

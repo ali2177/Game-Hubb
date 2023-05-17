@@ -41,6 +41,7 @@ const GenreList = ({ onClick, genre }: Probs) => {
             paddingY="5px"
             background={genree.id === genre?.id ? "#3e495d" : ""}
             borderRadius={genree.id === genre?.id ? "10px" : ""}
+            key={genree.id}
           >
             <HStack>
               <Image
