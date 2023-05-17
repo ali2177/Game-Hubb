@@ -3,17 +3,19 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import SeletonLoading from "./SeletonLoading";
 import { Genre } from "../hooks/useGenres";
+import { Platform } from "../hooks/usePlatform";
 
 interface Probs {
   genre: Genre | null;
+  selectedPlatform: Platform | null;
 }
 
-const GamesGrid = ({ genre }: Probs) => {
+const GamesGrid = ({ genre, selectedPlatform }: Probs) => {
   const { games, error, isloading } = useGames(
     {
-      params: { genres: genre?.id },
+      params: { genres: genre?.id, platforms: selectedPlatform?.id },
     },
-    [genre?.id]
+    [genre?.id, selectedPlatform?.id]
   );
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
