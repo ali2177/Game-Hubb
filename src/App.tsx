@@ -24,7 +24,7 @@ function App() {
       </GridItem>
       <Show>
         <GridItem area="aside">
-          <GenreList onClick={(genre) => setGenre(genre)} />
+          <GenreList onClick={(genre) => setGenre(genre)} genre={genre} />
         </GridItem>
       </Show>
 
