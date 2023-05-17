@@ -4,18 +4,22 @@ import GameCard from "./GameCard";
 import SeletonLoading from "./SeletonLoading";
 import { Genre } from "../hooks/useGenres";
 import { Platform } from "../hooks/usePlatform";
+import { GameQuery } from "../App";
 
 interface Probs {
-  genre: Genre | null;
-  selectedPlatform: Platform | null;
+  gameQuery: GameQuery;
 }
 
-const GamesGrid = ({ genre, selectedPlatform }: Probs) => {
+const GamesGrid = ({ gameQuery }: Probs) => {
   const { games, error, isloading } = useGames(
     {
-      params: { genres: genre?.id, platforms: selectedPlatform?.id },
+      params: {
+        genres: gameQuery.genre?.id,
+        platforms: gameQuery.selectedPlatform?.id,
+        ordering: gameQuery.sortOrder,
+      },
     },
-    [genre?.id, selectedPlatform?.id]
+    [gameQuery]
   );
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
