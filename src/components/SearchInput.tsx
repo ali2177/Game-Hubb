@@ -1,15 +1,29 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import React from "react";
+import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
+import { useState } from "react";
 
-const SearchInput = () => {
+interface Probs {
+  onClick: (userInput: string) => void;
+}
+const SearchInput = ({ onClick }: Probs) => {
+  const [userInput, setUserInput] = useState("");
+
+  const clickHandle = () => {
+    onClick(userInput);
+  };
   return (
     <InputGroup>
-      <InputLeftElement children={<BsSearch />} />
+      <InputLeftElement
+        cursor="pointer"
+        children={<BsSearch />}
+        onClick={clickHandle}
+      />
       <Input
         borderRadius="20px"
         placeholder="Search for games ..."
         variant="filled"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
       />
     </InputGroup>
   );
