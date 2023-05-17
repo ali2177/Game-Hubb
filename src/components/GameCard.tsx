@@ -1,13 +1,4 @@
-import {
-  Badge,
-  Card,
-  CardBody,
-  Divider,
-  HStack,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Card, CardBody, HStack, Heading, Image } from "@chakra-ui/react";
 import { Game } from "../hooks/useGames";
 import { Icon } from "@chakra-ui/react";
 import { MdPhoneIphone } from "react-icons/md";
@@ -43,9 +34,8 @@ const GameCard = ({ game }: Props) => {
     <Card borderRadius="10px" overflow="hidden">
       <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
-        <Heading fontSize="2xl">{game.name}</Heading>
         <HStack
-          marginTop="10px"
+          marginBottom="10px"
           alignItems="center"
           justifyContent="space-between"
         >
@@ -61,6 +51,7 @@ const GameCard = ({ game }: Props) => {
           </HStack>
           <CriticScore score={game.metacritic} />
         </HStack>
+        <Heading fontSize="1.2rem">{game.name}</Heading>
       </CardBody>
     </Card>
   );
