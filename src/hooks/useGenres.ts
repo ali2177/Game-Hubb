@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Genre {
   id: number;
@@ -13,30 +14,14 @@ interface FecthGenresResponse {
 }
 
 const useGenres = () => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setError] = useState("");
-  const [isloading, setIsloading] = useState(false);
+  const fetchGenres = () =>
+    apiClient.get<FecthGenresResponse>("/genres").then((res) => res.data);
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setIsloading(true);
-    apiClient
-      .get<FecthGenresResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setIsloading(false);
-      })
-      .catch((err) => {
-        if (err.name === "CanceledError") return;
-        setError(err.message);
-        setIsloading(false);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return { genres, error, isloading };
+  return useQuery({
+    queryKey: ["genres"],
+    queryFn: fetchGenres,
+    staleTime: 24 * 60 * 60 * 1000, //24 hours
+  });
 };
 
 export default useGenres;

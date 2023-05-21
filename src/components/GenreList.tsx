@@ -18,7 +18,7 @@ interface Probs {
 }
 
 const GenreList = ({ onClick, genre }: Probs) => {
-  const { genres, error, isloading } = useGenres();
+  const { data, error, isLoading } = useGenres();
 
   const clickHandle = (genre: Genre) => {
     console.log(genre);
@@ -30,7 +30,7 @@ const GenreList = ({ onClick, genre }: Probs) => {
         Genres
       </Heading>
       <List padding="0px 10px">
-        {genres.map((genree) => (
+        {data?.results.map((genree) => (
           <ListItem
             _hover={{
               background: "#3e495d",
