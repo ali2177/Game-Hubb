@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { AxiosRequestConfig } from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { GameQuery } from "../App";
 
 interface Platform {
   id: number;
@@ -21,37 +21,23 @@ interface FecthGamesResponse {
   results: Game[];
 }
 
-const useGames = (requestConfig: AxiosRequestConfig, deps?: any[]) => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [isloading, setIsloading] = useState(false);
-
-  useEffect(
-    () => {
-      const controller = new AbortController();
-
-      setIsloading(true);
-      apiClient
-        .get<FecthGamesResponse>("/games", {
-          signal: controller.signal,
-          ...requestConfig,
-        })
-        .then((res) => {
-          setGames(res.data.results);
-          setIsloading(false);
-        })
-        .catch((err) => {
-          if (err.name === "CanceledError") return;
-          setError(err.message);
-          setIsloading(false);
-        });
-
-      return () => controller.abort();
-    },
-    deps ? [...deps] : []
-  );
-
-  return { games, error, isloading };
+const useGames = (gameQuery: GameQuery) => {
+  const fetchGames = () =>
+    apiClient
+      .get<FecthGamesResponse>("/games", {
+        params: {
+          genres: gameQuery.genre?.id,
+          parent_platforms: gameQuery.selectedPlatform?.id,
+          ordering: gameQuery.sortOrder,
+          search: gameQuery.userInput,
+        },
+      })
+      .then((res) => res.data);
+  return useQuery<FecthGamesResponse, Error>({
+    queryKey: ["games", gameQuery],
+    queryFn: fetchGames,
+    staleTime: 24 * 60 * 60 * 1000, //24 hours
+  });
 };
 
 export default useGames;

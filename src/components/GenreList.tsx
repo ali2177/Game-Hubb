@@ -21,7 +21,6 @@ const GenreList = ({ onClick, genre }: Probs) => {
   const { data, error, isLoading } = useGenres();
 
   const clickHandle = (genre: Genre) => {
-    console.log(genre);
     onClick(genre);
   };
   return (
