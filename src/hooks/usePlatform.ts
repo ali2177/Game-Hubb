@@ -1,4 +1,4 @@
-import apiClient from "../services/api-client";
+import apiClient, { FectResponse } from "../services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
 export interface Platform {
@@ -7,15 +7,10 @@ export interface Platform {
   slug: string;
 }
 
-interface FecthPlatformResponse {
-  count: number;
-  results: Platform[];
-}
-
 const usePlatform = () => {
   const fetchPlatform = () =>
     apiClient
-      .get<FecthPlatformResponse>("/platforms/lists/parents")
+      .get<FectResponse<Platform>>("/platforms/lists/parents")
       .then((res) => res.data);
 
   return useQuery({

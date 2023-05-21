@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
+import apiClient, { FectResponse } from "../services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
 export interface Genre {
@@ -7,15 +6,9 @@ export interface Genre {
   name: string;
   image_background: string;
 }
-
-interface FecthGenresResponse {
-  count: number;
-  results: Genre[];
-}
-
 const useGenres = () => {
   const fetchGenres = () =>
-    apiClient.get<FecthGenresResponse>("/genres").then((res) => res.data);
+    apiClient.get<FectResponse<Genre>>("/genres").then((res) => res.data);
 
   return useQuery({
     queryKey: ["genres"],
