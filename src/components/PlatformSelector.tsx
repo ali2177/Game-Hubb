@@ -8,7 +8,7 @@ interface Probs {
 }
 
 const PlatformSelector = ({ onSelcetedPlatform, selectedPlatform }: Probs) => {
-  const { platforms, error, isloading } = usePlatform();
+  const { data, error, isLoading } = usePlatform();
 
   const clickHandle = (platform: Platform) => {
     onSelcetedPlatform(platform);
@@ -19,7 +19,7 @@ const PlatformSelector = ({ onSelcetedPlatform, selectedPlatform }: Probs) => {
         {selectedPlatform ? selectedPlatform.name : "Platforms"}
       </MenuButton>
       <MenuList>
-        {platforms.map((platform) => (
+        {data?.results.map((platform) => (
           <MenuItem
             as={Button}
             key={platform.id}

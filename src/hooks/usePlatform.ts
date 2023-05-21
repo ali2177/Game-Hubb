@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Platform {
   id: number;
@@ -13,32 +13,16 @@ interface FecthPlatformResponse {
 }
 
 const usePlatform = () => {
-  const [platforms, setPlatforms] = useState<Platform[]>([]);
-  const [error, setError] = useState("");
-  const [isloading, setIsloading] = useState(false);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setIsloading(true);
+  const fetchPlatform = () =>
     apiClient
-      .get<FecthPlatformResponse>("/platforms/lists/parents", {
-        signal: controller.signal,
-      })
-      .then((res) => {
-        setPlatforms(res.data.results);
-        setIsloading(false);
-      })
-      .catch((err) => {
-        if (err.name === "CanceledError") return;
-        setError(err.message);
-        setIsloading(false);
-      });
+      .get<FecthPlatformResponse>("/platforms/lists/parents")
+      .then((res) => res.data);
 
-    return () => controller.abort();
-  }, []);
-
-  return { platforms, error, isloading };
+  return useQuery({
+    queryKey: ["platform"],
+    queryFn: fetchPlatform,
+    staleTime: 24 * 60 * 60 * 1000, //24 hours
+  });
 };
 
 export default usePlatform;
