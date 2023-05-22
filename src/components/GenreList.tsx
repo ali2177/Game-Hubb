@@ -8,19 +8,18 @@ import {
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
-import { Genre } from "../hooks/useGenres";
 import { SpinnerCircular } from "spinners-react";
 
 interface Probs {
-  onClick: (genre: Genre) => void;
-  genre: Genre | null;
+  onClick: (genreID: number, genreName: string) => void;
+  genreID: number | null;
 }
 
-const GenreList = ({ onClick, genre }: Probs) => {
+const GenreList = ({ onClick, genreID }: Probs) => {
   const { data, error, isLoading } = useGenres();
 
-  const clickHandle = (genre: Genre) => {
-    onClick(genre);
+  const clickHandle = (genreID: number, genreName: string) => {
+    onClick(genreID, genreName);
   };
   return (
     <>
@@ -38,14 +37,14 @@ const GenreList = ({ onClick, genre }: Probs) => {
               transition: "all 0.5s",
             }}
             paddingY="5px"
-            background={genree.id === genre?.id ? "#3e495d" : ""}
-            borderRadius={genree.id === genre?.id ? "10px" : ""}
+            background={genree.id === genreID ? "#3e495d" : ""}
+            borderRadius={genree.id === genreID ? "10px" : ""}
             key={genree.id}
           >
             <HStack>
               <Image
                 borderRadius={8}
-                boxSize={genree.id === genre?.id ? "40px" : "32px"}
+                boxSize={genree.id === genreID ? "40px" : "32px"}
                 objectFit="cover"
                 src={getCroppedImageUrl(genree.image_background)}
               />
@@ -54,10 +53,10 @@ const GenreList = ({ onClick, genre }: Probs) => {
                 textAlign="left"
                 _hover={{ transition: "all 0.3s", fontWeight: "bold" }}
                 variant="unstyled"
-                color={genree.id === genre?.id ? "#fffe01" : ""}
-                fontWeight={genree.id === genre?.id ? "bold" : ""}
-                fontSize={genree.id === genre?.id ? "15px" : "13px"}
-                onClick={() => clickHandle(genree)}
+                color={genree.id === genreID ? "#fffe01" : ""}
+                fontWeight={genree.id === genreID ? "bold" : ""}
+                fontSize={genree.id === genreID ? "15px" : "13px"}
+                onClick={() => clickHandle(genree.id, genree.name)}
               >
                 {genree.name}
               </Button>
