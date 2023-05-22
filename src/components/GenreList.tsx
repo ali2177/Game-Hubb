@@ -1,16 +1,15 @@
 import {
-  Card,
   HStack,
   Image,
   List,
   ListItem,
   Button,
-  transition,
   Heading,
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 import { Genre } from "../hooks/useGenres";
+import { SpinnerCircular } from "spinners-react";
 
 interface Probs {
   onClick: (genre: Genre) => void;
@@ -28,6 +27,7 @@ const GenreList = ({ onClick, genre }: Probs) => {
       <Heading padding="5px 10px" fontSize="2xl" marginBottom="1rem">
         Genres
       </Heading>
+      {isLoading && <SpinnerCircular />}
       <List padding="0px 10px">
         {data?.results.map((genree) => (
           <ListItem
