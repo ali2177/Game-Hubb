@@ -9,17 +9,15 @@ import {
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 import { SpinnerCircular } from "spinners-react";
+import useGameQueryStore from "../store";
 
-interface Probs {
-  onClick: (genreID: number, genreName: string) => void;
-  genreID: number | null;
-}
-
-const GenreList = ({ onClick, genreID }: Probs) => {
+const GenreList = () => {
   const { data, error, isLoading } = useGenres();
+  const { gameQuery, setGenreID, setGenreName } = useGameQueryStore();
 
   const clickHandle = (genreID: number, genreName: string) => {
-    onClick(genreID, genreName);
+    setGenreID(genreID);
+    setGenreName(genreName);
   };
   return (
     <>
@@ -37,14 +35,14 @@ const GenreList = ({ onClick, genreID }: Probs) => {
               transition: "all 0.5s",
             }}
             paddingY="5px"
-            background={genree.id === genreID ? "#3e495d" : ""}
-            borderRadius={genree.id === genreID ? "10px" : ""}
+            background={genree.id === gameQuery.genreID ? "#3e495d" : ""}
+            borderRadius={genree.id === gameQuery.genreID ? "10px" : ""}
             key={genree.id}
           >
             <HStack>
               <Image
                 borderRadius={8}
-                boxSize={genree.id === genreID ? "40px" : "32px"}
+                boxSize={genree.id === gameQuery.genreID ? "40px" : "32px"}
                 objectFit="cover"
                 src={getCroppedImageUrl(genree.image_background)}
               />
@@ -53,9 +51,9 @@ const GenreList = ({ onClick, genreID }: Probs) => {
                 textAlign="left"
                 _hover={{ transition: "all 0.3s", fontWeight: "bold" }}
                 variant="unstyled"
-                color={genree.id === genreID ? "#fffe01" : ""}
-                fontWeight={genree.id === genreID ? "bold" : ""}
-                fontSize={genree.id === genreID ? "15px" : "13px"}
+                color={genree.id === gameQuery.genreID ? "#fffe01" : ""}
+                fontWeight={genree.id === gameQuery.genreID ? "bold" : ""}
+                fontSize={genree.id === gameQuery.genreID ? "15px" : "13px"}
                 onClick={() => clickHandle(genree.id, genree.name)}
               >
                 {genree.name}

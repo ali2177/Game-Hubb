@@ -1,6 +1,6 @@
 import APIClient, { FectResponse } from "../services/api-client";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { GameQuery } from "../App";
+import { GameQuery } from "../store";
 import { Platform } from "./usePlatform";
 
 export interface Game {

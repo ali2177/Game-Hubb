@@ -1,15 +1,14 @@
 import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
+import useGameQueryStore from "../store";
 
-interface Probs {
-  onClick: (userInput: string) => void;
-}
-const SearchInput = ({ onClick }: Probs) => {
-  const [userInput, setUserInput] = useState("");
+const SearchInput = () => {
+  const [userI, setUserI] = useState("");
+  const setUserInput = useGameQueryStore((s) => s.setUserInput);
 
   const clickHandle = () => {
-    onClick(userInput);
+    setUserInput(userI);
   };
   return (
     <InputGroup>
@@ -22,8 +21,8 @@ const SearchInput = ({ onClick }: Probs) => {
         borderRadius="20px"
         placeholder="Search for games ..."
         variant="filled"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
+        value={userI}
+        onChange={(e) => setUserI(e.target.value)}
       />
     </InputGroup>
   );
