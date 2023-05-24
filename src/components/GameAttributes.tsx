@@ -31,7 +31,7 @@ const GameAttributes = ({ game }: Props) => {
         </Detail>
       </GridItem>
       <GridItem w="100%">
-        <Detail heading="Genres">
+        <Detail heading="Publishers">
           {game?.publishers?.map((publisher) => (
             <Text>{publisher.name}</Text>
           ))}
