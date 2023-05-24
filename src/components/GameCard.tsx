@@ -14,6 +14,7 @@ import {
 import { IconType } from "react-icons/lib";
 import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image-url";
+import { Link } from "react-router-dom";
 
 interface Props {
   game: Game;
@@ -31,7 +32,11 @@ const GameCard = ({ game }: Props) => {
     nintendo: SiNintendo,
   };
   return (
-    <Card borderRadius="10px" overflow="hidden">
+    <Card
+      _hover={{ transform: "scale(1.1)", overflow: "hidden" }}
+      borderRadius="10px"
+      overflow="hidden"
+    >
       <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
         <HStack
@@ -51,7 +56,9 @@ const GameCard = ({ game }: Props) => {
           </HStack>
           <CriticScore score={game.metacritic} />
         </HStack>
-        <Heading fontSize="1.2rem">{game.name}</Heading>
+        <Heading fontSize="1.2rem">
+          <Link to={`/games/${game.slug}`}>{game.name}</Link>
+        </Heading>
       </CardBody>
     </Card>
   );

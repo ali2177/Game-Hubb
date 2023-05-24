@@ -9,7 +9,6 @@ const GameHeading = () => {
     gameQuery.genreName || ""
   } ${gameQuery?.sortOrder || ""} Games`;
 
-  console.log(gameQuery.selectedPlatform);
   return (
     <Heading padding="1rem" as="h1">
       {header}

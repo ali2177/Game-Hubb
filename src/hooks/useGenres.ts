@@ -1,4 +1,4 @@
-import APIClient, { FectResponse } from "../services/api-client";
+import APIClient from "../services/api-client";
 import { useQuery } from "@tanstack/react-query";
 
 export interface Genre {
@@ -8,7 +8,6 @@ export interface Genre {
 }
 
 const apiClient = new APIClient<Genre>("/genres");
-
 const useGenres = () => {
   return useQuery({
     queryKey: ["genres"],
