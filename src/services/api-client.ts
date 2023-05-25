@@ -7,7 +7,6 @@ export interface FectResponse<T> {
   results: T[];
 }
 
-
 const axiosInstance = axios.create({
   baseURL: "https://api.rawg.io/api",
   params: {
