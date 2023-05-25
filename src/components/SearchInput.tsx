@@ -2,13 +2,16 @@ import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import useGameQueryStore from "../store";
+import { useNavigate } from "react-router-dom";
 
 const SearchInput = () => {
   const [userI, setUserI] = useState("");
   const setUserInput = useGameQueryStore((s) => s.setUserInput);
+  const navigate = useNavigate();
 
   const clickHandle = () => {
     setUserInput(userI);
+    navigate("/");
   };
   return (
     <InputGroup>
